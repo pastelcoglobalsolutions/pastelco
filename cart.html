@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pastelco</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Alpine JS-->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <!-- End Alpine JS-->
+  </head>
+  <body x-data="cartPage()" x-init="init()">
+    >
+    <section id="header">
+      <a href="#"
+        ><img
+          src="img/logo.png"
+          width="350px"
+          height="automatic"
+          class="logo"
+          alt=""
+      /></a>
+
+      <div>
+        <ul id="navbar">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li id="lg-bag">
+            <a class="active" href="cart.html"
+              ><i class="fa-solid fa-bag-shopping"></i
+            ></a>
+          </li>
+          <a href="#" id="close"><i class="fa-solid fa-x"></i></a>
+        </ul>
+      </div>
+      <div id="mobile">
+        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+        <i id="bar" class="fa-solid fa-bars"></i>
+      </div>
+    </section>
+
+    <section id="page-header" class="blog-header">
+      <h2>#LET'S_TALK</h2>
+      <p>LEAVE A MESSAGE, We Love To Hear From You!</p>
+    </section>
+
+    <section id="cart" class="section-p1" x-data="cartPage()">
+      <table width="100%">
+        <thead>
+          <tr>
+            <td>Remove</td>
+            <td>Image</td>
+            <td>Product</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Subtotal</td>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="(item, i) in cart" :key="item.id">
+            <tr>
+              <td>
+                <button @click="removeItem(i)">❌</button>
+              </td>
+              <td>
+                <img :src="item.image" width="60" />
+              </td>
+              <td x-text="item.name"></td>
+              <td x-text="`Rp. ${item.price.toLocaleString()}`"></td>
+              <td>
+                <input
+                  type="number"
+                  min="1"
+                  x-model="item.quantity"
+                  @change="updateCart()"
+                  style="width: 60px"
+                />
+              </td>
+              <td
+                x-text="`Rp. ${(item.price * item.quantity).toLocaleString()}`"
+              ></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="cart-add" class="section-p1">
+      <div id="coupon">
+        <h3>Apply Coupon</h3>
+        <div>
+          <input type="text" placeholder="Enter Your Coupon" />
+          <button class="normal">Apply</button>
+        </div>
+      </div>
+
+      <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+          <tr>
+            <td>Cart Subtotal</td>
+            <td id="cart-subtotal">Rp. 0</td>
+          </tr>
+          <tr>
+            <td>Tax (12%)</td>
+            <td id="cart-tax">Rp. 0</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong id="cart-total">Rp. 0</strong></td>
+          </tr>
+        </table>
+        <button class="normal">Proceed To Checkout</button>
+      </div>
+    </section>
+
+    <footer class="section-p1">
+      <div class="col">
+        <img
+          class="logo"
+          src="img/logo3.png"
+          width="350px"
+          height="automatic"
+          alt=""
+        />
+        <h4>Contact</h4>
+        <p>
+          Address:<strong></strong> Jl. Kavling Setiabudi, Cipadu, Banten15155
+        </p>
+        <p>Phone:<strong></strong> 0822-9852-7256/0821-1408-3657</p>
+        <p>Hours:<strong></strong> 09:00 - 19:00, Mon - Sat</p>
+        <div class="follow">
+          <h4>Follow Us</h4>
+          <div class="icon">
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <h4>About</h4>
+        <a href="#">About Us</a>
+        <a href="#">Delivery Information</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Contact Us</a>
+      </div>
+
+      <div class="col">
+        <h4>My Account</h4>
+        <a href="#">Sign In</a>
+        <a href="#">View Cart</a>
+        <a href="#">My Wishlist</a>
+        <a href="#">Track My Order</a>
+        <a href="#">Help</a>
+      </div>
+
+      <div class="col install">
+        <h4>Install App</h4>
+        <p>From Google Play</p>
+        <div class="row">
+          <img src="img/pay/play.jpg" alt="" />
+        </div>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay2.png" alt="" />
+      </div>
+
+      <div class="copyright">
+        <p>
+          Copyright © 2025 www.pastelcoglobalsolutions.com, All Right Reserved |
+          Privacy Policy
+        </p>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+    <script>
+      function cartPage() {
+        return {
+          cart: JSON.parse(localStorage.getItem("cart")) || [],
+
+          // Saat halaman pertama kali dibuka
+          init() {
+            this.updateSummary();
+          },
+
+          // Simpan ulang ke localStorage
+          updateCart() {
+            localStorage.setItem("cart", JSON.stringify(this.cart));
+            this.updateSummary();
+          },
+
+          // Hapus item
+          removeItem(i) {
+            this.cart.splice(i, 1);
+            this.updateCart();
+          },
+
+          // Hitung total belanja
+          cartTotal() {
+            return this.cart.reduce(
+              (sum, item) => sum + Number(item.price) * Number(item.quantity),
+              0
+            );
+          },
+
+          // Update subtotal, pajak, total
+          updateSummary() {
+            let subtotal = this.cartTotal();
+            let tax = subtotal * 0.12; // pajak 12%
+            let total = subtotal + tax;
+
+            let subtotalEl = document.getElementById("cart-subtotal");
+            let taxEl = document.getElementById("cart-tax");
+            let totalEl = document.getElementById("cart-total");
+
+            if (subtotalEl)
+              subtotalEl.textContent = "Rp. " + subtotal.toLocaleString();
+            if (taxEl) taxEl.textContent = "Rp. " + tax.toLocaleString();
+            if (totalEl) totalEl.textContent = "Rp. " + total.toLocaleString();
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
